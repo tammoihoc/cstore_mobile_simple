@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  config:
+    import: "optional:file:../.env[.properties]"
+  application:
+    name: cstore-simple-api
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3307/cstore_mobile_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: cstore
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update # local development only; use Flyway migrations for deployment
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+
+# Request/response DTOs and provider URLs can contain credentials.
+# Local road-routing demo: override ROUTING_BASE_URL with an OSRM deployment
+# for sustained use. Default HTTPS demo requests are serialized and cached.
+logging:
+  level:
+    org.springframework.web: INFO
